@@ -89,27 +89,26 @@ fun Navigation(navController: NavHostController) {
 
 sealed class Screen(
     val route: String,
-   val tittle: String,
     val selectedIcon: ImageVector,
     val unSelectedIcon: ImageVector
 ) {
     object WorldNews : Screen(
         "WorldNews",
-        "WorldNews",
+
         selectedIcon = Icons.Filled.Newspaper,
         unSelectedIcon = Icons.Outlined.Newspaper
     )
 
     object DetailScreen : Screen(
         "DetailScreen",
-        "DetailScreen",
+
         selectedIcon = Icons.Filled.Newspaper,
         unSelectedIcon = Icons.Outlined.Newspaper
     )
 
     object Home : Screen(
         "Home",
-        "Home",
+
         selectedIcon = Icons.Filled.Home,
         unSelectedIcon = Icons.Outlined.Home
     )
@@ -117,14 +116,14 @@ sealed class Screen(
 
     object Favorite : Screen(
         "Favorite",
-        "Favorite",
+
         selectedIcon = Icons.Filled.Favorite,
         unSelectedIcon = Icons.Outlined.FavoriteBorder
     )
 
     object Profile : Screen(
         "Profile",
-        "Profile",
+
         selectedIcon = Icons.Filled.Person,
         unSelectedIcon = Icons.Outlined.Person
     )

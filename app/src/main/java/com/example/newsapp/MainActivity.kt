@@ -431,7 +431,7 @@ fun HomeScreen(navController: NavController) {
 
                 newsdata?.let { result ->
                     items(result.results) {
-                        Catagery1(result = it)
+                        Catagery1(result = it,navController)
                     }
 
                 }
@@ -444,10 +444,14 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun Catagery1(result: Result) {
+fun Catagery1(result: Result,navController: NavController) {
     Card(
         modifier = Modifier
             .width(345.dp)
+            .clickable {  navController.navigate(
+                Screen.DetailScreen.route +
+                        "/${Uri.encode(result.multimedia[0].url)}/${result.multimedia[0].caption}/${result.abstract}/${result.byline}/${result.publishedDate}/${result.desFacet}/${result.itemType}"
+            ) }
             .height(228.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {

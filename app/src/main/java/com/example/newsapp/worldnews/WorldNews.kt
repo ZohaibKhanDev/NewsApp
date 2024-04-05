@@ -1,7 +1,9 @@
 package com.example.newsapp.worldnews
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -105,11 +107,6 @@ fun WorldNewsScreen(navController: NavController) {
         })
     }) {
 
-
-        Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
-
-        }
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,22 +118,27 @@ fun WorldNewsScreen(navController: NavController) {
             worlddata?.let {
                 worlddata?.let { result ->
                     items(result.results) { home ->
-                        WorldNewsItem(result = home)
+                        WorldNewsItem(result = home,navController)
                     }
                 }
             }
         }
+        
     }
 
 }
 
 @Composable
-fun WorldNewsItem(result: Result) {
+fun WorldNewsItem(result: Result,navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable {  navController.navigate(
+                Screen.DetailScreen.route +
+                        "/${Uri.encode(result.multimedia[0].url)}/${result.title}/${result.desFacet}/${result.byline}/${result.updatedDate}/${result.abstract}/${result.section}"
+            ) }
             .height(400.dp)
-            .padding(10.dp), colors = CardDefaults.cardColors(Color.LightGray), elevation = CardDefaults.cardElevation(5.dp)
+            .padding(10.dp), colors = CardDefaults.cardColors(Color.White), elevation = CardDefaults.cardElevation(5.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             val image: Resource<Painter> = asyncPainterResource(data = result.multimedia[0].url)
