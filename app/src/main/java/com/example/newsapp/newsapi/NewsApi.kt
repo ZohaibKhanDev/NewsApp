@@ -1,5 +1,6 @@
 package com.example.newsapp.newsapi
 
+import androidx.room.Query
 import com.example.newsapp.newsapi.News
 
 interface NewsApi {
@@ -11,6 +12,7 @@ interface NewsApi {
     suspend  fun Sports():News
     suspend  fun SundayReview():News
     suspend  fun WorldNews():News
+    suspend  fun Search(query: String):News
 
 
 }

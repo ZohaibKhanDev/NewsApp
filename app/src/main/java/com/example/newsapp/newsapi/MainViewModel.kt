@@ -2,6 +2,7 @@ package com.example.newsapp.newsapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Query
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,6 +34,21 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     private val _allWorldNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
     val allWorldNews:StateFlow<ResultState<News>> =_allWorldNews.asStateFlow()
 
+    private val _allSearch=MutableStateFlow<ResultState<News>>(ResultState.Loading)
+    val allSearch:StateFlow<ResultState<News>> =_allSearch.asStateFlow()
+
+
+    fun getAllSearch(query:String){
+        viewModelScope.launch {
+            _allSearch.value=ResultState.Loading
+            try {
+                val response=repository.Search(query)
+                _allSearch.value=ResultState.Success(response)
+            }catch (e:Exception){
+                _allSearch.value=ResultState.Error(e)
+            }
+        }
+    }
       fun getAllNews(){
         viewModelScope.launch {
             _allNews.value=ResultState.Loading

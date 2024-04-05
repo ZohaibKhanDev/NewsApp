@@ -6,10 +6,13 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.SavedSearch
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Newspaper
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -43,8 +46,8 @@ fun Navigation(navController: NavHostController) {
         composable(Screen.Favorite.route){
             FavScreen(navController = navController)
         }
-        composable(Screen.Profile.route){
-            ProfileScreen(navController = navController)
+        composable(Screen.Search.route){
+            SearchScreen(navController = navController)
         }
         composable(Screen.DetailScreen.route+"/{image}/{tittle}/{des}/{newdes}/{date}/{about}/{write}",
             arguments = listOf(
@@ -121,11 +124,11 @@ sealed class Screen(
         unSelectedIcon = Icons.Outlined.FavoriteBorder
     )
 
-    object Profile : Screen(
-        "Profile",
+    object Search : Screen(
+        "Search",
 
-        selectedIcon = Icons.Filled.Person,
-        unSelectedIcon = Icons.Outlined.Person
+        selectedIcon = Icons.Filled.SavedSearch,
+        unSelectedIcon = Icons.Outlined.Search
     )
 }
 
@@ -138,7 +141,7 @@ fun FavScreen(navController: NavController) {
 }
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun SearchScreen(navController: NavController) {
 
 }
 
@@ -158,7 +161,7 @@ fun BottomNavigation(navController: NavController) {
         Screen.Home,
         Screen.WorldNews,
         Screen.Favorite,
-        Screen.Profile
+        Screen.Search
     )
 
     NavigationBar {

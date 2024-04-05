@@ -36,4 +36,8 @@ class Repository:NewsApi{
         return NewsApiClient.WorldNews()
     }
 
+    override suspend fun Search(query: String): News {
+        return NewsApiClient.getSearch(query)
+    }
+
 }
