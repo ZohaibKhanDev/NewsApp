@@ -1,5 +1,6 @@
 package com.example.newsapp.newsapi
 
+import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.Contast.APIKEY
 import com.example.newsapp.newsapi.Contast.TIMEOUT
 import io.ktor.client.HttpClient
@@ -67,5 +68,10 @@ object NewsApiClient {
     suspend fun SundayReview():News{
         return client.get("https://api.nytimes.com/svc/topstories/v2/sundayreview.json?api-key=$APIKEY").body()
     }
+
+    suspend fun WorldNews():News{
+        return client.get("https://api.nytimes.com/svc/topstories/v2/world.json?api-key=$APIKEY").body()
+    }
+
 
 }

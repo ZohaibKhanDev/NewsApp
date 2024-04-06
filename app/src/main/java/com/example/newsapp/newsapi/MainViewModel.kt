@@ -29,6 +29,10 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     private val _allSundayReview= MutableStateFlow<ResultState<News>>(ResultState.Loading)
     val allSundayReview:StateFlow<ResultState<News>> =_allNews.asStateFlow()
 
+
+    private val _allWorldNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
+    val allWorldNews:StateFlow<ResultState<News>> =_allWorldNews.asStateFlow()
+
       fun getAllNews(){
         viewModelScope.launch {
             _allNews.value=ResultState.Loading
@@ -110,6 +114,18 @@ class MainViewModel(private val repository: Repository):ViewModel() {
                 _allSundayReview.value=ResultState.Success(response)
             }catch (e:Exception){
                 _allSundayReview.value=ResultState.Error(e)
+            }
+        }
+    }
+
+    fun getAllWorldNews(){
+        viewModelScope.launch {
+            _allWorldNews.value=ResultState.Loading
+            try {
+                val response=repository.WorldNews()
+                _allWorldNews.value=ResultState.Success(response)
+            }catch (e:Exception){
+                _allWorldNews.value=ResultState.Error(e)
             }
         }
     }

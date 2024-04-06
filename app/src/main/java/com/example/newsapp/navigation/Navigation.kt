@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.newsapp.HomeScreen
 import com.example.newsapp.detailscreens.DetailScreen
+import com.example.newsapp.worldnews.WorldNewsScreen
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -61,7 +62,7 @@ fun Navigation(navController: NavHostController) {
                 },
 
                 navArgument("date",){
-                    type= NavType.IntType
+                    type= NavType.StringType
                 },
 
                 navArgument("about",){
@@ -78,7 +79,7 @@ fun Navigation(navController: NavHostController) {
             val tittle=it.arguments?.getString("tittle")
             val des=it.arguments?.getString("des")
             val newdes=it.arguments?.getString("newdes")
-            val date=it.arguments?.getInt("date")
+            val date=it.arguments?.getString("date")
             val about=it.arguments?.getString("about")
             val write=it.arguments?.getString("write")
             DetailScreen(navController,image,tittle,des,newdes,date,about,write)
@@ -131,10 +132,6 @@ sealed class Screen(
 
 
 
-@Composable
-fun WorldNewsScreen(navController: NavController) {
-
-}
 
 @Composable
 fun FavScreen(navController: NavController) {

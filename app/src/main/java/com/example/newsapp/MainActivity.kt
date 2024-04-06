@@ -184,7 +184,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (healthyState as ResultState.Success).response
-            helthydata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -200,7 +200,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (sundayState as ResultState.Success).response
-            sportsdata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -217,7 +217,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (tecState as ResultState.Success).response
-            tecdata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -234,7 +234,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (politicsState as ResultState.Success).response
-            politicesdata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -251,7 +251,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (artState as ResultState.Success).response
-            artdata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -268,7 +268,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (sportsState as ResultState.Success).response
-            sportsdata = response
+            newsdata = response
         }
 
         is ResultState.Error -> {
@@ -428,54 +428,15 @@ fun HomeScreen(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (healthy) {
-                    helthydata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
 
+                newsdata?.let { result ->
+                    items(result.results) {
+                        Catagery1(result = it)
                     }
-                }
-                if (Tecnoligy) {
-                    tecdata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
 
-                    }
                 }
-                if (Politices) {
-                    politicesdata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
 
-                    }
-                }
-                if (Art) {
-                    artdata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
 
-                    }
-                }
-                if (Sports) {
-                    sportsdata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
-
-                    }
-                }
-                if (SundayReview) {
-                    sundaydata?.let { result ->
-                        items(result.results) {
-                            Catagery1(result = it)
-                        }
-
-                    }
-                }
             }
 
         }
@@ -539,25 +500,24 @@ fun HomeNews(result: Result, navController: NavController) {
 
     Card(modifier = Modifier
         .clickable {
-            navController.navigate(Screen.DetailScreen.route +
-                    "/${Uri.encode(result.multimedia[0].url)}/" +
-                    "${result.multimedia[0].caption}/${result.abstract}" +
-                    "/${result.desFacet}/${result.updatedDate}" +
-                    "/${result.perFacet}/${result.byline}")
+            navController.navigate(
+                Screen.DetailScreen.route +
+                        "/${Uri.encode(result.multimedia[0].url)}/${result.multimedia[0].caption}/${result.abstract}/${result.byline}/${result.publishedDate}/${result.desFacet}/${result.itemType}"
+            )
         }
         .width(396.dp)
         .height(240.dp)
-        .padding(4.dp),
+        .padding(0.dp),
         elevation = CardDefaults.cardElevation(4.dp)) {
         Box(
-            modifier = Modifier, contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
         ) {
             val image: Resource<Painter> = asyncPainterResource(data = result.multimedia[0].url)
             KamelImage(
                 resource = image,
                 contentDescription = "",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Crop
             )
             Box(
                 modifier = Modifier

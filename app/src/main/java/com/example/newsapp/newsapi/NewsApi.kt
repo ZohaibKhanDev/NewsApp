@@ -10,6 +10,7 @@ interface NewsApi {
     suspend  fun Art():News
     suspend  fun Sports():News
     suspend  fun SundayReview():News
+    suspend  fun WorldNews():News
 
 
 }

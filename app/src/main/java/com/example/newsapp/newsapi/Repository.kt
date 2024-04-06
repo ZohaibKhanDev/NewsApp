@@ -32,4 +32,8 @@ class Repository:NewsApi{
         return NewsApiClient.SundayReview()
     }
 
+    override suspend fun WorldNews(): News {
+        return NewsApiClient.WorldNews()
+    }
+
 }
