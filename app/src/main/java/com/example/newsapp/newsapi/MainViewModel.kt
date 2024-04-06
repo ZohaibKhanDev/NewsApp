@@ -2,7 +2,7 @@ package com.example.newsapp.newsapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
+import com.example.newsapp.searchscreen.Search
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,29 +13,29 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     val allNews:StateFlow<ResultState<News>> =_allNews.asStateFlow()
 
     private val _allHealthy= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allHealthy:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allHealthy:StateFlow<ResultState<News>> =_allHealthy.asStateFlow()
 
     private val _allTechnlogy= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allTechnlogy:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allTechnlogy:StateFlow<ResultState<News>> =_allTechnlogy.asStateFlow()
 
     private val _allPolitics= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allPolitics:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allPolitics:StateFlow<ResultState<News>> =_allPolitics.asStateFlow()
 
     private val _allArt= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allArt:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allArt:StateFlow<ResultState<News>> =_allArt.asStateFlow()
 
     private val _allSports= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allSports:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allSports:StateFlow<ResultState<News>> =_allSports.asStateFlow()
 
     private val _allSundayReview= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allSundayReview:StateFlow<ResultState<News>> =_allNews.asStateFlow()
+    val allSundayReview: StateFlow<ResultState<News>> =_allSundayReview.asStateFlow()
 
 
     private val _allWorldNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
     val allWorldNews:StateFlow<ResultState<News>> =_allWorldNews.asStateFlow()
 
-    private val _allSearch=MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allSearch:StateFlow<ResultState<News>> =_allSearch.asStateFlow()
+    private val _allSearch=MutableStateFlow<ResultState<Search>>(ResultState.Loading)
+    val allSearch:StateFlow<ResultState<Search>> =_allSearch.asStateFlow()
 
 
     fun getAllSearch(query:String){

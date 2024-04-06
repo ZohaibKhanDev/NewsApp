@@ -15,26 +15,34 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.newsapp.R
+import com.example.newsapp.navigation.Screen
 import kotlin.text.Typography.cent
 
 @Composable
-fun DetailScreen(
+fun HomeDetailScreen(
     navController: NavController,
     image: String?,
     tittle: String?,
@@ -44,9 +52,13 @@ fun DetailScreen(
     about: String?,
     write: String?
 ) {
-
+    var fav by remember {
+        mutableStateOf(false)
+    }
     Column(
-        modifier = Modifier.fillMaxSize().background(Color.White),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -114,39 +126,49 @@ fun DetailScreen(
                         .clickable { }
                         .padding(start = 320.dp)
                         .clip(CircleShape)
-                        .background(Color(0XFFFF3A44))
+                        .background(Color.LightGray.copy(alpha = 0.40f))
                         .width(56.dp)
                         .height(56.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.img),
-                        contentDescription = "",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .width(22.dp)
-                            .height(18.dp)
-                            .align(Alignment.Center)
-                    )
+                    if (fav) {
+                        Icon(imageVector = Icons.Filled.Favorite,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clickable { fav = !fav }
+                                .width(40.dp)
+                                .height(40.dp)
+                                .align(Alignment.Center), tint = Color.Red
+                        )
+                    } else {
+                        Icon(imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clickable { fav = !fav }
+                                .width(40.dp)
+                                .height(40.dp)
+                                .align(Alignment.Center)
+                        )
+                    }
+
                 }
 
             }
 
 
-              
-            }
         }
+    }
     Box(modifier = Modifier
         .clip(RoundedCornerShape(1.dp))
         .padding(start = 10.dp, top = 8.dp)
         .width(32.dp)
         .height(32.dp)
         .clickable { navController.popBackStack() }
-        .background(Color(0XFFF5F5F5).copy(alpha = 0.90f)), contentAlignment = Alignment.Center){
-        Icon(imageVector = Icons.Outlined.ArrowBackIosNew, contentDescription ="" )
+        .background(Color(0XFFF5F5F5).copy(alpha = 0.90f)), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.ArrowBackIosNew, contentDescription = "")
     }
 
 
-    }
+}
 
 

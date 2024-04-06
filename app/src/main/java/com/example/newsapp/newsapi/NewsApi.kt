@@ -1,7 +1,7 @@
 package com.example.newsapp.newsapi
 
-import androidx.room.Query
-import com.example.newsapp.newsapi.News
+import com.example.newsapp.navigation.Screen
+import com.example.newsapp.searchscreen.Search
 
 interface NewsApi {
     suspend  fun getAllNews():News
@@ -12,7 +12,7 @@ interface NewsApi {
     suspend  fun Sports():News
     suspend  fun SundayReview():News
     suspend  fun WorldNews():News
-    suspend  fun Search(query: String):News
+    suspend  fun Search(query: String):Search
 
 
 }

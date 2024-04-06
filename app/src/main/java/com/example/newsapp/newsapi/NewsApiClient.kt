@@ -6,6 +6,7 @@ import com.example.newsapp.newsapi.Contast.BEGIN_DATE
 import com.example.newsapp.newsapi.Contast.END_DATE
 import com.example.newsapp.newsapi.Contast.SORT
 import com.example.newsapp.newsapi.Contast.TIMEOUT
+import com.example.newsapp.searchscreen.Search
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -90,7 +91,7 @@ object NewsApiClient {
             .body()
     }
 
-    suspend fun getSearch(query: String): News {
+    suspend fun getSearch(query: String): Search {
         return client.get("https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${APIKEY}&begin_date=${BEGIN_DATE}&end_date=${END_DATE}&sort=${SORT}&page=1")
             .body()
 

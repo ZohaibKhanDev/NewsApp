@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -69,14 +71,14 @@ fun WorldNewsScreen(navController: NavController) {
     var isWorld by remember {
         mutableStateOf(false)
     }
-
-    LaunchedEffect(key1 = isWorld) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.getAllWorldNews()
     }
     val worldstate by viewModel.allWorldNews.collectAsState()
     when (worldstate) {
         is ResultState.Error -> {
             val error = (worldstate as ResultState.Error).error
+            isWorld=false
             Text(text = error.toString())
         }
 
@@ -90,23 +92,28 @@ fun WorldNewsScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val success = (worldstate as ResultState.Success).response
+            isWorld=false
             worlddata = success
         }
     }
+
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = {
             Text(
                 text = "World News",
-                color = Color.Red,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                fontWeight = FontWeight.Bold
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                fontWeight = FontWeight.ExtraBold
             )
         }, navigationIcon = {
-            Icon(imageVector = Icons.Default.Settings, contentDescription = "")
+            Icon(imageVector = Icons.Default.Menu, contentDescription = "", modifier = Modifier.size(30.dp))
         })
     }) {
-
+        if (isWorld){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                CircularProgressIndicator()
+            }
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -115,9 +122,9 @@ fun WorldNewsScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            worlddata?.let {
-                worlddata?.let { result ->
-                    items(result.results) { home ->
+            worlddata?.let {news->
+                news.results?.let { result ->
+                    items(result) { home ->
                         WorldNewsItem(result = home,navController)
                     }
                 }
@@ -133,10 +140,12 @@ fun WorldNewsItem(result: Result,navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {  navController.navigate(
-                Screen.DetailScreen.route +
-                        "/${Uri.encode(result.multimedia[0].url)}/${result.title}/${result.desFacet}/${result.byline}/${result.updatedDate}/${result.abstract}/${result.section}"
-            ) }
+            .clickable {
+                navController.navigate(
+                    Screen.DetailScreen.route +
+                            "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                )
+            }
             .height(400.dp)
             .padding(10.dp), colors = CardDefaults.cardColors(Color.White), elevation = CardDefaults.cardElevation(5.dp)
     ) {

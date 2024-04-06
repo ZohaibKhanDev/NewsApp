@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class News(
     @SerialName("copyright")
-    val copyright: String,
+    val copyright: String? =null,
     @SerialName("last_updated")
     val lastUpdated: String,
     @SerialName("num_results")
-    val numResults: Int,
+    val numResults: Int? = null,
     @SerialName("results")
-    val results: List<Result>,
+    val results: List<Result>? = null,
     @SerialName("section")
-    val section: String,
+    val section: String? = null,
     @SerialName("status")
     val status: String
 )

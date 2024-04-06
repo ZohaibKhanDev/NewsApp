@@ -16,27 +16,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -50,7 +52,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -139,19 +140,27 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
+    var isLatest by remember {
+        mutableStateOf(false)
+    }
     val state by viewModel.allNews.collectAsState()
     when (state) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isLatest = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (state as ResultState.Success).response
+            isLatest = false
             newsdata = response
         }
 
         is ResultState.Error -> {
             val error = (state as ResultState.Error).error
+            isLatest = false
             Text(text = error.toString())
         }
     }
@@ -174,17 +183,22 @@ fun HomeScreen(navController: NavController) {
     var sundaydata by remember {
         mutableStateOf<News?>(null)
     }
-
+    var isCategory by remember {
+        mutableStateOf(false)
+    }
 
     val healthyState by viewModel.allHealthy.collectAsState()
     when (healthyState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (healthyState as ResultState.Success).response
-            newsdata = response
+            helthydata = response
         }
 
         is ResultState.Error -> {
@@ -195,12 +209,15 @@ fun HomeScreen(navController: NavController) {
     val sundayState by viewModel.allSundayReview.collectAsState()
     when (sundayState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (sundayState as ResultState.Success).response
-            newsdata = response
+            sundaydata = response
         }
 
         is ResultState.Error -> {
@@ -212,12 +229,15 @@ fun HomeScreen(navController: NavController) {
     val tecState by viewModel.allTechnlogy.collectAsState()
     when (tecState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (tecState as ResultState.Success).response
-            newsdata = response
+            tecdata = response
         }
 
         is ResultState.Error -> {
@@ -229,12 +249,15 @@ fun HomeScreen(navController: NavController) {
     val politicsState by viewModel.allPolitics.collectAsState()
     when (politicsState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (politicsState as ResultState.Success).response
-            newsdata = response
+            politicesdata = response
         }
 
         is ResultState.Error -> {
@@ -246,12 +269,15 @@ fun HomeScreen(navController: NavController) {
     val artState by viewModel.allArt.collectAsState()
     when (artState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (artState as ResultState.Success).response
-            newsdata = response
+            artdata = response
         }
 
         is ResultState.Error -> {
@@ -263,53 +289,73 @@ fun HomeScreen(navController: NavController) {
     val sportsState by viewModel.allSports.collectAsState()
     when (sportsState) {
         is ResultState.Loading -> {
-            CircularProgressIndicator()
+            isCategory = true
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
 
         is ResultState.Success -> {
             val response = (sportsState as ResultState.Success).response
-            newsdata = response
+            isCategory = false
+            sportsdata = response
         }
 
         is ResultState.Error -> {
             val error = (sportsState as ResultState.Error).error
+            isCategory = false
             Text(text = error.toString())
         }
     }
 
-    var topbar by remember {
-        mutableStateOf("")
-    }
     Scaffold(topBar = {
-        CenterAlignedTopAppBar(title = {
-            OutlinedTextField(
-                value = topbar,
-                onValueChange = {
-                    topbar = it
-                },
-                placeholder = {
-                    Text(
-                        text = "Regecoin to the moon",
-                        fontSize = MaterialTheme.typography.titleSmall.fontSize
-                    )
-                },
-                shape = RoundedCornerShape(300.dp),
-                modifier = Modifier
-                    .width(336.dp)
-                    .height(65.dp)
-                    .padding(top = 11.dp),
-                trailingIcon = {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "")
-                },
-                textStyle = TextStyle(
-                    fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                    textAlign = TextAlign.Justify,
+        TopAppBar(
+            title = {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(start = 139.dp, top = 6.dp)
+                        .size(18.dp)
+                )
+                Text(
+                    text = "G.T Road,KolKata",
+                    fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 50.dp)
+                )
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(start = 30.dp, top = 4.dp)
+                        .size(18.dp)
 
-                    )
-
-            )
-        })
+                )
+            },
+            navigationIcon = {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "",
+                    tint = Color(0XFF0096fa)
+                )
+            },
+            actions = {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "",
+                    tint = Color(0XFF0096fa)
+                )
+            }
+        )
     }) { it ->
+
+        if (isLatest) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -325,16 +371,16 @@ fun HomeScreen(navController: NavController) {
                     text = "Latest News",
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     fontWeight = FontWeight.ExtraBold,
-                    modifier = Modifier.padding(top = 10.dp, start = 14.dp)
+                    modifier = Modifier.padding(top = 7.dp, start = 14.dp, bottom = 6.dp)
                 )
 
-                /* Icon(
-                     imageVector = Icons.Default.ArrowBack,
-                     contentDescription = "",
-                     modifier = Modifier
-                         .padding(top = 10.dp, start = 14.dp)
-                         .rotate(180f)
-                 )*/
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(top = 7.dp, start = 14.dp, bottom = 6.dp)
+                        .rotate(180f)
+                )
             }
             LazyRow(
                 modifier = Modifier
@@ -343,8 +389,8 @@ fun HomeScreen(navController: NavController) {
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                newsdata?.let { result ->
-                    items(result.results) { home ->
+                newsdata?.results?.let { result ->
+                    items(result) { home ->
                         HomeNews(result = home, navController)
                     }
                 }
@@ -429,9 +475,9 @@ fun HomeScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                newsdata?.let { result ->
-                    items(result.results) {
-                        Catagery1(result = it,navController)
+                newsdata?.results?.let { result ->
+                    items(result) {
+                        Catagery1(result = it, navController)
                     }
 
                 }
@@ -444,14 +490,16 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun Catagery1(result: Result,navController: NavController) {
+fun Catagery1(result: Result, navController: NavController) {
     Card(
         modifier = Modifier
             .width(345.dp)
-            .clickable {  navController.navigate(
-                Screen.DetailScreen.route +
-                        "/${Uri.encode(result.multimedia[0].url)}/${result.multimedia[0].caption}/${result.abstract}/${result.byline}/${result.publishedDate}/${result.desFacet}/${result.itemType}"
-            ) }
+            .clickable {
+                navController.navigate(
+                    Screen.DetailScreen.route +
+                            "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                )
+            }
             .height(228.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -506,12 +554,12 @@ fun HomeNews(result: Result, navController: NavController) {
         .clickable {
             navController.navigate(
                 Screen.DetailScreen.route +
-                        "/${Uri.encode(result.multimedia[0].url)}/${result.multimedia[0].caption}/${result.abstract}/${result.byline}/${result.publishedDate}/${result.desFacet}/${result.itemType}"
+                        "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
             )
         }
         .width(396.dp)
         .height(240.dp)
-        .padding(0.dp),
+        .padding(start = 9.dp),
         elevation = CardDefaults.cardElevation(4.dp)) {
         Box(
             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center

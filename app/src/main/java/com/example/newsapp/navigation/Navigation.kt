@@ -5,13 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Newspaper
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SavedSearch
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Newspaper
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -30,7 +27,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.newsapp.HomeScreen
-import com.example.newsapp.detailscreens.DetailScreen
+import com.example.newsapp.detailscreens.HomeDetailScreen
+import com.example.newsapp.searchscreen.SearchScreen
 import com.example.newsapp.worldnews.WorldNewsScreen
 
 @Composable
@@ -85,10 +83,12 @@ fun Navigation(navController: NavHostController) {
             val date=it.arguments?.getString("date")
             val about=it.arguments?.getString("about")
             val write=it.arguments?.getString("write")
-            DetailScreen(navController,image,tittle,des,newdes,date,about,write)
+            HomeDetailScreen(navController,image,tittle,des,newdes,date,about,write)
         }
     }
 }
+
+
 
 sealed class Screen(
     val route: String,
@@ -140,10 +140,6 @@ fun FavScreen(navController: NavController) {
 
 }
 
-@Composable
-fun SearchScreen(navController: NavController) {
-
-}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -160,8 +156,8 @@ fun BottomNavigation(navController: NavController) {
     val item= listOf(
         Screen.Home,
         Screen.WorldNews,
-        Screen.Favorite,
-        Screen.Search
+        Screen.Search,
+        Screen.Favorite
     )
 
     NavigationBar {

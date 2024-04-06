@@ -1,7 +1,7 @@
 package com.example.newsapp.newsapi
 
-import androidx.room.Database
-import com.example.newsapp.newsapi.NewsApi
+import com.example.newsapp.navigation.Screen
+import com.example.newsapp.searchscreen.Search
 
 class Repository:NewsApi{
     override suspend fun getAllNews(): News {
@@ -36,8 +36,9 @@ class Repository:NewsApi{
         return NewsApiClient.WorldNews()
     }
 
-    override suspend fun Search(query: String): News {
+    override suspend fun Search(query: String): Search {
         return NewsApiClient.getSearch(query)
     }
+
 
 }
