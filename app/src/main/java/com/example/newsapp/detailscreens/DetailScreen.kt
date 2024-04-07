@@ -1,19 +1,19 @@
 package com.example.newsapp.detailscreens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.ArrowBackIosNew
@@ -33,12 +33,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.room.Room
 import coil.compose.AsyncImage
 import com.example.newsapp.R
 import com.example.newsapp.navigation.Screen
+import com.example.newsapp.newsapi.MainViewModel
+import com.example.newsapp.newsapi.Repository
+import com.example.newsapp.roomdatabase.DataBase
+import com.example.newsapp.roomdatabase.FavItem
 import kotlin.text.Typography.cent
 
 @Composable
@@ -52,6 +58,18 @@ fun HomeDetailScreen(
     about: String?,
     write: String?
 ) {
+    val context= LocalContext.current
+    val db= Room.databaseBuilder(
+        context,
+        DataBase::class.java,
+        "demo.db"
+    ).allowMainThreadQueries().build()
+    val repository = remember {
+        Repository(db)
+    }
+    val viewModel = remember {
+        MainViewModel(repository)
+    }
     var fav by remember {
         mutableStateOf(false)
     }
@@ -96,11 +114,12 @@ fun HomeDetailScreen(
                 )
 
             }
-
+            val scrollState = rememberScrollState()
             Card(
                 modifier = Modifier
                     .padding(top = 314.dp)
                     .fillMaxWidth()
+                    .verticalScroll(scrollState)
                     .height(400.dp)
                     .align(Alignment.Center),
                 colors = CardDefaults.cardColors(Color.White),
@@ -144,7 +163,12 @@ fun HomeDetailScreen(
                         Icon(imageVector = Icons.Outlined.FavoriteBorder,
                             contentDescription = "",
                             modifier = Modifier
-                                .clickable { fav = !fav }
+                                .clickable {
+                                    fav = !fav
+                                    val favt= FavItem(null, image!!, tittle!!,des!!)
+
+                                    favt.let { viewModel.getAllInsert(it) }
+                                }
                                 .width(40.dp)
                                 .height(40.dp)
                                 .align(Alignment.Center)

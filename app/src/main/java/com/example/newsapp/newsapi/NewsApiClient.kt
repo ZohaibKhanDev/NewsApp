@@ -1,12 +1,12 @@
 package com.example.newsapp.newsapi
 
-import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.Contast.APIKEY
 import com.example.newsapp.newsapi.Contast.BEGIN_DATE
 import com.example.newsapp.newsapi.Contast.END_DATE
 import com.example.newsapp.newsapi.Contast.SORT
 import com.example.newsapp.newsapi.Contast.TIMEOUT
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.worldnews.World
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -28,7 +28,6 @@ object NewsApiClient {
                 Json {
                     isLenient = true
                     ignoreUnknownKeys = true
-                    explicitNulls = false
                     prettyPrint = true
                 }
             )
@@ -86,7 +85,7 @@ object NewsApiClient {
             .body()
     }
 
-    suspend fun WorldNews(): News {
+    suspend fun WorldNews(): World {
         return client.get("https://api.nytimes.com/svc/topstories/v2/world.json?api-key=$APIKEY")
             .body()
     }

@@ -1,9 +1,19 @@
 package com.example.newsapp.newsapi
 
-import com.example.newsapp.navigation.Screen
+import com.example.newsapp.roomdatabase.DataBase
+import com.example.newsapp.roomdatabase.FavItem
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.worldnews.World
 
-class Repository:NewsApi{
+class Repository(private val dataBase: DataBase):NewsApi{
+
+    fun getAllFav():List<FavItem>{
+        return dataBase.favdao().getAllFav()
+    }
+
+    fun Insert(favItem: FavItem){
+        return dataBase.favdao().Insert(favItem)
+    }
     override suspend fun getAllNews(): News {
         return NewsApiClient.getAllNews()
     }
@@ -32,7 +42,7 @@ class Repository:NewsApi{
         return NewsApiClient.SundayReview()
     }
 
-    override suspend fun WorldNews(): News {
+    override suspend fun WorldNews(): World {
         return NewsApiClient.WorldNews()
     }
 

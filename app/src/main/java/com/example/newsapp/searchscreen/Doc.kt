@@ -25,9 +25,9 @@ data class Doc(
     @SerialName("news_desk")
     val newsDesk: String,
     @SerialName("print_page")
-    val printPage: String,
+    val printPage: String?=null,
     @SerialName("print_section")
-    val printSection: String,
+    val printSection: String?=null,
     @SerialName("pub_date")
     val pubDate: String,
     @SerialName("section_name")
@@ -37,7 +37,7 @@ data class Doc(
     @SerialName("source")
     val source: String,
     @SerialName("subsection_name")
-    val subsectionName: String,
+    val subsectionName: String?=null,
     @SerialName("type_of_material")
     val typeOfMaterial: String,
     @SerialName("uri")

@@ -2,6 +2,7 @@ package com.example.newsapp.newsapi
 
 import com.example.newsapp.navigation.Screen
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.worldnews.World
 
 interface NewsApi {
     suspend  fun getAllNews():News
@@ -11,7 +12,7 @@ interface NewsApi {
     suspend  fun Art():News
     suspend  fun Sports():News
     suspend  fun SundayReview():News
-    suspend  fun WorldNews():News
+    suspend  fun WorldNews():World
     suspend  fun Search(query: String):Search
 
 

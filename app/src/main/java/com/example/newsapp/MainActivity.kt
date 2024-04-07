@@ -52,10 +52,13 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.newsapp.navigation.Entry
 import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.MainViewModel
@@ -63,6 +66,7 @@ import com.example.newsapp.newsapi.News
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.Result
 import com.example.newsapp.newsapi.ResultState
+import com.example.newsapp.roomdatabase.DataBase
 import com.example.newsapp.ui.theme.NewsAppTheme
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -84,8 +88,14 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
+    val context= LocalContext.current
+    val db= Room.databaseBuilder(
+        context,
+        DataBase::class.java,
+        "demo.db"
+    ).allowMainThreadQueries().build()
     val repository = remember {
-        Repository()
+        Repository(db)
     }
     val viewModel = remember {
         MainViewModel(repository)

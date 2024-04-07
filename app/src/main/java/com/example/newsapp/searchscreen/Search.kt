@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Search(
     @SerialName("copyright")
-    val copyright: String,
+    val copyright: String?=null,
     @SerialName("response")
-    val response: Response,
+    val response: Response?=null,
     @SerialName("status")
-    val status: String
+    val status: String?=null
 )

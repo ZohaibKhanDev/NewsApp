@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.newsapp.HomeScreen
 import com.example.newsapp.detailscreens.HomeDetailScreen
+import com.example.newsapp.fav.FavScreen
 import com.example.newsapp.searchscreen.SearchScreen
 import com.example.newsapp.worldnews.WorldNewsScreen
 
@@ -135,10 +136,7 @@ sealed class Screen(
 
 
 
-@Composable
-fun FavScreen(navController: NavController) {
 
-}
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

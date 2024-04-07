@@ -2,7 +2,9 @@ package com.example.newsapp.newsapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.roomdatabase.FavItem
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.worldnews.World
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,11 +33,17 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     val allSundayReview: StateFlow<ResultState<News>> =_allSundayReview.asStateFlow()
 
 
-    private val _allWorldNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allWorldNews:StateFlow<ResultState<News>> =_allWorldNews.asStateFlow()
+    private val _allWorldNews= MutableStateFlow<ResultState<World>>(ResultState.Loading)
+    val allWorldNews:StateFlow<ResultState<World>> =_allWorldNews.asStateFlow()
 
     private val _allSearch=MutableStateFlow<ResultState<Search>>(ResultState.Loading)
     val allSearch:StateFlow<ResultState<Search>> =_allSearch.asStateFlow()
+
+    private val _allFav=MutableStateFlow<ResultState<List<FavItem>>>(ResultState.Loading)
+    val allFav:StateFlow<ResultState<List<FavItem>>> =_allFav.asStateFlow()
+
+    private val _allInsert=MutableStateFlow<ResultState<Unit>>(ResultState.Loading)
+    val allInsert:StateFlow<ResultState<Unit>> =_allInsert.asStateFlow()
 
 
     fun getAllSearch(query:String){
@@ -142,6 +150,31 @@ class MainViewModel(private val repository: Repository):ViewModel() {
                 _allWorldNews.value=ResultState.Success(response)
             }catch (e:Exception){
                 _allWorldNews.value=ResultState.Error(e)
+            }
+        }
+    }
+
+    fun getAllFav(){
+        viewModelScope.launch {
+            _allFav.value=ResultState.Loading
+            try {
+                val response=repository.getAllFav()
+                _allFav.value=ResultState.Success(response)
+            }catch (e:Exception){
+                _allFav.value=ResultState.Error(e)
+            }
+        }
+    }
+
+
+    fun getAllInsert(favItem: FavItem){
+        viewModelScope.launch {
+            _allInsert.value=ResultState.Loading
+            try {
+                val response=repository.Insert(favItem)
+                _allInsert.value=ResultState.Success(response)
+            }catch (e:Exception){
+                _allInsert.value=ResultState.Error(e)
             }
         }
     }

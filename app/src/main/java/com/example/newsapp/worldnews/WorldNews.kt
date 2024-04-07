@@ -6,18 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -39,16 +36,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.newsapp.HomeNews
+import androidx.room.Room
 import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.MainViewModel
-import com.example.newsapp.newsapi.News
 import com.example.newsapp.newsapi.Repository
-import com.example.newsapp.newsapi.Result
 import com.example.newsapp.newsapi.ResultState
+import com.example.newsapp.roomdatabase.DataBase
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -58,15 +55,21 @@ import io.kamel.image.asyncPainterResource
 @Composable
 fun WorldNewsScreen(navController: NavController) {
 
+    val context= LocalContext.current
+    val db= Room.databaseBuilder(
+        context,
+        DataBase::class.java,
+        "demo.db"
+    ).allowMainThreadQueries().build()
     val repository = remember {
-        Repository()
+        Repository(db)
     }
     val viewModel = remember {
         MainViewModel(repository)
     }
 
     var worlddata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<World?>(null)
     }
     var isWorld by remember {
         mutableStateOf(false)
@@ -123,10 +126,8 @@ fun WorldNewsScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             worlddata?.let {news->
-                news.results?.let { result ->
-                    items(result) { home ->
-                        WorldNewsItem(result = home,navController)
-                    }
+                items(news.results) { home ->
+                    WorldNewsItem(result = home,navController)
                 }
             }
         }
@@ -136,14 +137,14 @@ fun WorldNewsScreen(navController: NavController) {
 }
 
 @Composable
-fun WorldNewsItem(result: Result,navController: NavController) {
+fun WorldNewsItem(result: Result, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
                 navController.navigate(
                     Screen.DetailScreen.route +
-                            "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                    "/${Uri.encode(result.multimedia[0].url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.section}/${result.byline}"
                 )
             }
             .height(400.dp)

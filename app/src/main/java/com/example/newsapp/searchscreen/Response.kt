@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Response(
     @SerialName("docs")
-    val docs: List<Doc>,
+    val docs: List<Doc>?=null,
     @SerialName("meta")
     val meta: Meta
 )

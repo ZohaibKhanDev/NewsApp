@@ -1,4 +1,4 @@
-package com.example.newsapp.searchscreen
+package com.example.newsapp.worldnews
 
 
 import kotlinx.serialization.SerialName
@@ -7,19 +7,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Multimedia(
     @SerialName("caption")
-    val caption: String?=null,
-    @SerialName("credit")
-    val credit: String?=null,
-    @SerialName("crop_name")
-    val cropName: String,
+    val caption: String,
+    @SerialName("copyright")
+    val copyright: String,
+    @SerialName("format")
+    val format: String,
     @SerialName("height")
     val height: Int,
-    @SerialName("legacy")
-    val legacy: Legacy?=null,
-    @SerialName("rank")
-    val rank: Int,
-    @SerialName("subType")
-    val subType: String,
     @SerialName("subtype")
     val subtype: String,
     @SerialName("type")

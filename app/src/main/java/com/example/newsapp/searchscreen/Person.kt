@@ -11,15 +11,15 @@ data class Person(
     @SerialName("lastname")
     val lastname: String,
     @SerialName("middlename")
-    val middlename: String,
+    val middlename: String?=null,
     @SerialName("organization")
     val organization: String,
     @SerialName("qualifier")
-    val qualifier: String,
+    val qualifier: String?=null,
     @SerialName("rank")
     val rank: Int,
     @SerialName("role")
     val role: String,
     @SerialName("title")
-    val title: String
+    val title: String?=null
 )
