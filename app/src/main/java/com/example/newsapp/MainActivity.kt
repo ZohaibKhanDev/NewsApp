@@ -58,7 +58,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Room
-import androidx.room.RoomDatabase
+import com.example.newsapp.art.Art
+import com.example.newsapp.healthy.Healthy
 import com.example.newsapp.navigation.Entry
 import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.MainViewModel
@@ -66,7 +67,11 @@ import com.example.newsapp.newsapi.News
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.Result
 import com.example.newsapp.newsapi.ResultState
+import com.example.newsapp.politices.Politices
 import com.example.newsapp.roomdatabase.DataBase
+import com.example.newsapp.sports.Sports
+import com.example.newsapp.sundayreview.SundayReview
+import com.example.newsapp.technlogy.Technlogy
 import com.example.newsapp.ui.theme.NewsAppTheme
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -83,13 +88,40 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    val context= LocalContext.current
-    val db= Room.databaseBuilder(
+    val context = LocalContext.current
+    val db = Room.databaseBuilder(
         context,
         DataBase::class.java,
         "demo.db"
@@ -174,33 +206,37 @@ fun HomeScreen(navController: NavController) {
             Text(text = error.toString())
         }
     }
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getAllNews()
+    }
 
     var helthydata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var tecdata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var politicesdata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var artdata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var sportsdata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var sundaydata by remember {
-        mutableStateOf<News?>(null)
+        mutableStateOf<Healthy?>(null)
     }
     var isCategory by remember {
         mutableStateOf(false)
     }
 
+
     val healthyState by viewModel.allHealthy.collectAsState()
     when (healthyState) {
         is ResultState.Loading -> {
-            isCategory = true
+
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -208,6 +244,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (healthyState as ResultState.Success).response
+
             helthydata = response
         }
 
@@ -219,7 +256,6 @@ fun HomeScreen(navController: NavController) {
     val sundayState by viewModel.allSundayReview.collectAsState()
     when (sundayState) {
         is ResultState.Loading -> {
-            isCategory = true
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -227,7 +263,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (sundayState as ResultState.Success).response
-            sundaydata = response
+            helthydata = response
         }
 
         is ResultState.Error -> {
@@ -239,7 +275,6 @@ fun HomeScreen(navController: NavController) {
     val tecState by viewModel.allTechnlogy.collectAsState()
     when (tecState) {
         is ResultState.Loading -> {
-            isCategory = true
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -247,7 +282,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (tecState as ResultState.Success).response
-            tecdata = response
+            helthydata = response
         }
 
         is ResultState.Error -> {
@@ -259,7 +294,6 @@ fun HomeScreen(navController: NavController) {
     val politicsState by viewModel.allPolitics.collectAsState()
     when (politicsState) {
         is ResultState.Loading -> {
-            isCategory = true
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -267,7 +301,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (politicsState as ResultState.Success).response
-            politicesdata = response
+            helthydata = response
         }
 
         is ResultState.Error -> {
@@ -279,7 +313,7 @@ fun HomeScreen(navController: NavController) {
     val artState by viewModel.allArt.collectAsState()
     when (artState) {
         is ResultState.Loading -> {
-            isCategory = true
+
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -287,7 +321,7 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (artState as ResultState.Success).response
-            artdata = response
+            helthydata = response
         }
 
         is ResultState.Error -> {
@@ -299,7 +333,7 @@ fun HomeScreen(navController: NavController) {
     val sportsState by viewModel.allSports.collectAsState()
     when (sportsState) {
         is ResultState.Loading -> {
-            isCategory = true
+
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -307,13 +341,13 @@ fun HomeScreen(navController: NavController) {
 
         is ResultState.Success -> {
             val response = (sportsState as ResultState.Success).response
-            isCategory = false
-            sportsdata = response
+
+            helthydata = response
         }
 
         is ResultState.Error -> {
             val error = (sportsState as ResultState.Error).error
-            isCategory = false
+
             Text(text = error.toString())
         }
     }
@@ -416,6 +450,7 @@ fun HomeScreen(navController: NavController) {
                 item {
                     Button(
                         onClick = {
+                            isCategory = true
                             healthy = true
                             viewModel.getAllHealthy()
                         },
@@ -426,6 +461,7 @@ fun HomeScreen(navController: NavController) {
                     Spacer(modifier = Modifier.width(12.dp))
                     Button(
                         onClick = {
+                            isCategory = true
                             Tecnoligy = true
                             viewModel.getAllTechnlogy()
                         },
@@ -436,6 +472,7 @@ fun HomeScreen(navController: NavController) {
                     Spacer(modifier = Modifier.width(12.dp))
                     Button(
                         onClick = {
+                            isCategory = true
                             Politices = true
                             viewModel.getAllPolitics()
                         },
@@ -446,6 +483,7 @@ fun HomeScreen(navController: NavController) {
                     Spacer(modifier = Modifier.width(12.dp))
                     Button(
                         onClick = {
+                            isCategory = true
                             Art = true
                             viewModel.getAllArt()
                         },
@@ -456,6 +494,7 @@ fun HomeScreen(navController: NavController) {
                     Spacer(modifier = Modifier.width(12.dp))
                     Button(
                         onClick = {
+                            isCategory = true
                             Sports = true
                             viewModel.getAllSports()
                         },
@@ -466,6 +505,7 @@ fun HomeScreen(navController: NavController) {
                     Spacer(modifier = Modifier.width(12.dp))
                     Button(
                         onClick = {
+                            isCategory = true
                             SundayReview = true
                             viewModel.getAllHealthy()
                         },
@@ -484,12 +524,20 @@ fun HomeScreen(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                if (isCategory) {
+                    helthydata?.results?.let { result ->
+                        items(result) {
+                            Catagery1(result = it, navController)
+                        }
 
-                newsdata?.results?.let { result ->
-                    items(result) {
-                        Catagery1(result = it, navController)
                     }
+                } else {
+                    newsdata?.results?.let { result ->
+                        items(result) {
+                            HomeNews(result = it, navController = navController)
+                        }
 
+                    }
                 }
 
 
@@ -500,14 +548,17 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun Catagery1(result: Result, navController: NavController) {
+fun Catagery1(
+    result: com.example.newsapp.healthy.Result,
+    navController: NavController,
+) {
     Card(
         modifier = Modifier
             .width(345.dp)
             .clickable {
                 navController.navigate(
                     Screen.DetailScreen.route +
-                            "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                            "/${Uri.encode(result.uri)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
                 )
             }
             .height(228.dp),
@@ -516,7 +567,7 @@ fun Catagery1(result: Result, navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
         ) {
-            val image: Resource<Painter> = asyncPainterResource(data = result.multimedia[0].url)
+            val image: Resource<Painter> = asyncPainterResource(data = result.uri)
             KamelImage(
                 resource = image,
                 contentDescription = "",
@@ -530,7 +581,7 @@ fun Catagery1(result: Result, navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = result.title,
+                    text = result.abstract,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier

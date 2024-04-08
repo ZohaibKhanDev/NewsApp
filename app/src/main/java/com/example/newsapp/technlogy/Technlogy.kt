@@ -1,11 +1,11 @@
-package com.example.newsapp.newsapi
+package com.example.newsapp.technlogy
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class News(
+data class Technlogy(
     @SerialName("copyright")
     val copyright: String,
     @SerialName("last_updated")

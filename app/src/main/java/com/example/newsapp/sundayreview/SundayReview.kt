@@ -1,17 +1,17 @@
-package com.example.newsapp.newsapi
+package com.example.newsapp.sundayreview
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class News(
+data class SundayReview(
     @SerialName("copyright")
-    val copyright: String,
+    val copyright: String?=null,
     @SerialName("last_updated")
-    val lastUpdated: String,
+    val lastUpdated: String?=null,
     @SerialName("num_results")
-    val numResults: Int,
+    val numResults: Int?=null,
     @SerialName("results")
     val results: List<Result>,
     @SerialName("section")

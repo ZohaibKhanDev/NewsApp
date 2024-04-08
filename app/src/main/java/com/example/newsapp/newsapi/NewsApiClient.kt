@@ -1,11 +1,17 @@
 package com.example.newsapp.newsapi
 
+import com.example.newsapp.art.Art
+import com.example.newsapp.healthy.Healthy
 import com.example.newsapp.newsapi.Contast.APIKEY
 import com.example.newsapp.newsapi.Contast.BEGIN_DATE
 import com.example.newsapp.newsapi.Contast.END_DATE
 import com.example.newsapp.newsapi.Contast.SORT
 import com.example.newsapp.newsapi.Contast.TIMEOUT
+import com.example.newsapp.politices.Politices
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.sports.Sports
+import com.example.newsapp.sundayreview.SundayReview
+import com.example.newsapp.technlogy.Technlogy
 import com.example.newsapp.worldnews.World
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -55,32 +61,32 @@ object NewsApiClient {
             .body()
     }
 
-    suspend fun Healthy(): News {
+    suspend fun Healthy(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/health.json?api-key=$APIKEY")
             .body()
     }
 
-    suspend fun Technlogy(): News {
+    suspend fun Technlogy(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=$APIKEY")
             .body()
     }
 
-    suspend fun Politics(): News {
+    suspend fun Politics(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/politics.json?api-key=$APIKEY")
             .body()
     }
 
-    suspend fun Art(): News {
+    suspend fun Art(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=$APIKEY")
             .body()
     }
 
-    suspend fun Sports(): News {
+    suspend fun Sports(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=$APIKEY")
             .body()
     }
 
-    suspend fun SundayReview(): News {
+    suspend fun SundayReview(): Healthy {
         return client.get("https://api.nytimes.com/svc/topstories/v2/sundayreview.json?api-key=$APIKEY")
             .body()
     }

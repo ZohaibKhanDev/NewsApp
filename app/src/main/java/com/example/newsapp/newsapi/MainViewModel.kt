@@ -2,8 +2,14 @@ package com.example.newsapp.newsapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.art.Art
+import com.example.newsapp.healthy.Healthy
+import com.example.newsapp.politices.Politices
 import com.example.newsapp.roomdatabase.FavItem
 import com.example.newsapp.searchscreen.Search
+import com.example.newsapp.sports.Sports
+import com.example.newsapp.sundayreview.SundayReview
+import com.example.newsapp.technlogy.Technlogy
 import com.example.newsapp.worldnews.World
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,23 +20,23 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     private val _allNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
     val allNews:StateFlow<ResultState<News>> =_allNews.asStateFlow()
 
-    private val _allHealthy= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allHealthy:StateFlow<ResultState<News>> =_allHealthy.asStateFlow()
+    private val _allHealthy= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allHealthy:StateFlow<ResultState<Healthy>> =_allHealthy.asStateFlow()
 
-    private val _allTechnlogy= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allTechnlogy:StateFlow<ResultState<News>> =_allTechnlogy.asStateFlow()
+    private val _allTechnlogy= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allTechnlogy:StateFlow<ResultState<Healthy>> =_allTechnlogy.asStateFlow()
 
-    private val _allPolitics= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allPolitics:StateFlow<ResultState<News>> =_allPolitics.asStateFlow()
+    private val _allPolitics= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allPolitics:StateFlow<ResultState<Healthy>> =_allPolitics.asStateFlow()
 
-    private val _allArt= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allArt:StateFlow<ResultState<News>> =_allArt.asStateFlow()
+    private val _allArt= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allArt:StateFlow<ResultState<Healthy>> =_allArt.asStateFlow()
 
-    private val _allSports= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allSports:StateFlow<ResultState<News>> =_allSports.asStateFlow()
+    private val _allSports= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allSports:StateFlow<ResultState<Healthy>> =_allSports.asStateFlow()
 
-    private val _allSundayReview= MutableStateFlow<ResultState<News>>(ResultState.Loading)
-    val allSundayReview: StateFlow<ResultState<News>> =_allSundayReview.asStateFlow()
+    private val _allSundayReview= MutableStateFlow<ResultState<Healthy>>(ResultState.Loading)
+    val allSundayReview: StateFlow<ResultState<Healthy>> =_allSundayReview.asStateFlow()
 
 
     private val _allWorldNews= MutableStateFlow<ResultState<World>>(ResultState.Loading)

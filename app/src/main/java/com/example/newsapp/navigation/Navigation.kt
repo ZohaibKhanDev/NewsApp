@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.newsapp.HomeScreen
 import com.example.newsapp.detailscreens.HomeDetailScreen
+import com.example.newsapp.fav.FavDetail
 import com.example.newsapp.fav.FavScreen
 import com.example.newsapp.searchscreen.SearchScreen
 import com.example.newsapp.worldnews.WorldNewsScreen
@@ -86,6 +87,26 @@ fun Navigation(navController: NavHostController) {
             val write=it.arguments?.getString("write")
             HomeDetailScreen(navController,image,tittle,des,newdes,date,about,write)
         }
+        composable(Screen.FavDetail.route +"/{image}/{tittle}/{des}",
+            arguments = listOf(
+                navArgument("image"){
+                    type= NavType.StringType
+                },
+
+                navArgument("tittle"){
+                    type= NavType.StringType
+                },
+
+                navArgument("des"){
+                    type= NavType.StringType
+                },
+            )
+            ){
+            val image=it.arguments?.getString("image")
+            val tittle=it.arguments?.getString("tittle")
+            val des=it.arguments?.getString("des")
+            FavDetail(navController,image,tittle,des)
+        }
     }
 }
 
@@ -98,6 +119,12 @@ sealed class Screen(
 ) {
     object WorldNews : Screen(
         "WorldNews",
+
+        selectedIcon = Icons.Filled.Newspaper,
+        unSelectedIcon = Icons.Outlined.Newspaper
+    )
+    object FavDetail : Screen(
+        "FavDetail",
 
         selectedIcon = Icons.Filled.Newspaper,
         unSelectedIcon = Icons.Outlined.Newspaper

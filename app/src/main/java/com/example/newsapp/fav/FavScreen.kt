@@ -1,24 +1,31 @@
 package com.example.newsapp.fav
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedContent
+import android.net.Uri
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.FormatListBulleted
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Splitscreen
+import androidx.compose.material.icons.outlined.ArrowBackIosNew
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,10 +41,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.room.Room
+import coil.compose.AsyncImage
+import com.example.newsapp.navigation.Screen
 import com.example.newsapp.newsapi.MainViewModel
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.ResultState
@@ -72,7 +85,7 @@ fun FavScreen(navController: NavController) {
         viewModel.getAllFav()
     }
     val favState by viewModel.allFav.collectAsState()
-    val list by remember {
+    var list by remember {
         mutableStateOf(false)
     }
     when (favState) {
@@ -116,32 +129,113 @@ fun FavScreen(navController: NavController) {
                 CircularProgressIndicator()
             }
         }
-        Row(
+
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = it.calculateTopPadding(), start = 12.dp),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Icon(imageVector = Icons.Default.Dashboard, contentDescription = "")
-            Icon(imageVector = Icons.Default.FormatListBulleted, contentDescription = "")
-        }
+                .padding(top = 50.dp, bottom = 50.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(7.dp),
+            horizontalArrangement = Arrangement.Center,
 
-        if (list) {
-            AnimatedContent(targetState = list) {
-                LazyColumn {
-                    favData?.let { fav ->
-                        fav?.let {
-                            items(it) {
-
-                            }
-                        }
+            ) {
+            favData?.let { fav ->
+                fav.let {
+                    items(it) { hm ->
+                        FavItem(favItem = hm, navController)
                     }
                 }
+
             }
         }
+    }
+}
+
+
+@Composable
+fun FavItem(favItem: FavItem, navController: NavController) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(
+                    Screen.FavDetail.route +"/${Uri.encode(favItem.image)}/${favItem.tittle}/${favItem.des}"
+                )
+            }
+            .height(300.dp)
+            .padding(10.dp), elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
+            AsyncImage(
+                model = favItem.image,
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+        }
+
 
 
     }
+}
 
+@Composable
+fun FavDetail(navController: NavController, image: String?, tittle: String?, des: String?) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+
+            AsyncImage(
+                model = image,
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(899.dp),
+                contentScale = ContentScale.Crop
+            )
+            Card(
+                modifier = Modifier
+
+                    .width(311.dp)
+                    .height(141.dp)
+                    .align(Alignment.Center),
+                colors = CardDefaults.cardColors(Color.LightGray.copy(alpha = 0.90f))
+            ) {
+                Text(
+                    text = "$tittle",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+                Text(
+                    text = "$des",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+
+            }
+        }
+
+    }
+    Box(modifier = Modifier
+        .clip(RoundedCornerShape(1.dp))
+        .padding(start = 10.dp, top = 8.dp)
+        .width(32.dp)
+        .height(32.dp)
+        .clickable { navController.popBackStack() }
+        .background(Color(0XFFF5F5F5).copy(alpha = 0.90f)), contentAlignment = Alignment.Center) {
+        Icon(imageVector = Icons.Outlined.ArrowBackIosNew, contentDescription = "")
+    }
 }
