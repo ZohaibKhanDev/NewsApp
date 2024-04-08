@@ -85,9 +85,7 @@ fun FavScreen(navController: NavController) {
         viewModel.getAllFav()
     }
     val favState by viewModel.allFav.collectAsState()
-    var list by remember {
-        mutableStateOf(false)
-    }
+
     when (favState) {
         is ResultState.Error -> {
             val error = (favState as ResultState.Error).error

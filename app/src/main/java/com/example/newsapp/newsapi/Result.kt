@@ -23,7 +23,7 @@ data class Result(
     @SerialName("material_type_facet")
     val materialTypeFacet: String,
     @SerialName("multimedia")
-    val multimedia: List<Multimedia>,
+    val multimedia: List<Multimedia>?=null,
     @SerialName("org_facet")
     val orgFacet: List<String>,
     @SerialName("per_facet")

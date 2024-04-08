@@ -58,7 +58,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Room
-import com.example.newsapp.art.Art
 import com.example.newsapp.healthy.Healthy
 import com.example.newsapp.navigation.Entry
 import com.example.newsapp.navigation.Screen
@@ -67,11 +66,7 @@ import com.example.newsapp.newsapi.News
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.Result
 import com.example.newsapp.newsapi.ResultState
-import com.example.newsapp.politices.Politices
 import com.example.newsapp.roomdatabase.DataBase
-import com.example.newsapp.sports.Sports
-import com.example.newsapp.sundayreview.SundayReview
-import com.example.newsapp.technlogy.Technlogy
 import com.example.newsapp.ui.theme.NewsAppTheme
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -206,9 +201,7 @@ fun HomeScreen(navController: NavController) {
             Text(text = error.toString())
         }
     }
-    LaunchedEffect(key1 = Unit) {
-        viewModel.getAllNews()
-    }
+
 
     var helthydata by remember {
         mutableStateOf<Healthy?>(null)
@@ -433,10 +426,13 @@ fun HomeScreen(navController: NavController) {
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                newsdata?.results?.let { result ->
-                    items(result) { home ->
-                        HomeNews(result = home, navController)
+                newsdata?.results?.let {fav->
+                    fav.let {
+                        items(it){home->
+                            HomeNews(result = home, navController =navController )
+                        }
                     }
+
                 }
             }
 
@@ -558,7 +554,7 @@ fun Catagery1(
             .clickable {
                 navController.navigate(
                     Screen.DetailScreen.route +
-                            "/${Uri.encode(result.uri)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                            "/${Uri.encode(result.multimedia?.first()?.url.toString())}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
                 )
             }
             .height(228.dp),
@@ -567,7 +563,7 @@ fun Catagery1(
         Box(
             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
         ) {
-            val image: Resource<Painter> = asyncPainterResource(data = result.uri)
+            val image: Resource<Painter> = asyncPainterResource(data = result.multimedia?.first()?.url.toString())
             KamelImage(
                 resource = image,
                 contentDescription = "",
@@ -581,7 +577,7 @@ fun Catagery1(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = result.abstract,
+                    text = result.title,
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -615,7 +611,7 @@ fun HomeNews(result: Result, navController: NavController) {
         .clickable {
             navController.navigate(
                 Screen.DetailScreen.route +
-                        "/${Uri.encode(result.multimedia.first().url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
+                        "/${Uri.encode(result.multimedia?.first()?.url)}/${result.title}/${result.abstract}/${result.itemType}/${result.updatedDate}/${result.createdDate}/${result.byline}"
             )
         }
         .width(396.dp)
@@ -625,7 +621,7 @@ fun HomeNews(result: Result, navController: NavController) {
         Box(
             modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
         ) {
-            val image: Resource<Painter> = asyncPainterResource(data = result.multimedia[0].url)
+            val image: Resource<Painter> = asyncPainterResource(data = result?.multimedia?.get(0)?.url.toString())
             KamelImage(
                 resource = image,
                 contentDescription = "",
