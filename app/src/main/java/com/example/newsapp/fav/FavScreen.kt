@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
@@ -47,33 +45,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.room.Room
 import coil.compose.AsyncImage
 import com.example.newsapp.navigation.Screen
-import com.example.newsapp.newsapi.MainViewModel
+import com.example.newsapp.newsapi.MainViewModels
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.ResultState
 import com.example.newsapp.roomdatabase.DataBase
 import com.example.newsapp.roomdatabase.FavItem
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
 @Composable
 fun FavScreen(navController: NavController) {
 
-    val context = LocalContext.current
-    val db = Room.databaseBuilder(
-        context,
-        DataBase::class.java,
-        "demo.db"
-    ).allowMainThreadQueries().build()
-    val repository = remember {
-        Repository(db)
-    }
-    val viewModel = remember {
-        MainViewModel(repository)
-    }
+    val viewModel:MainViewModels= koinInject()
+
     var favData by remember {
         mutableStateOf<List<FavItem>?>(null)
     }
@@ -158,7 +146,7 @@ fun FavItem(favItem: FavItem, navController: NavController) {
             .fillMaxWidth()
             .clickable {
                 navController.navigate(
-                    Screen.FavDetail.route +"/${Uri.encode(favItem.image)}/${favItem.tittle}/${favItem.des}"
+                    Screen.FavDetail.route + "/${Uri.encode(favItem.image)}/${favItem.tittle}/${favItem.des}"
                 )
             }
             .height(300.dp)

@@ -84,4 +84,9 @@ dependencies {
     kapt ("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("media.kamel:kamel-image:0.9.4")
+    implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.4"))
+    implementation("io.insert-koin:koin-core")
+    implementation("io.insert-koin:koin-android")
+    implementation("io.insert-koin:koin-compose")
+    implementation("io.insert-koin:koin-annotations:1.3.1")
 }

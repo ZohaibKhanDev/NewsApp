@@ -2,21 +2,20 @@ package com.example.newsapp.newsapi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.art.Art
 import com.example.newsapp.healthy.Healthy
-import com.example.newsapp.politices.Politices
 import com.example.newsapp.roomdatabase.FavItem
 import com.example.newsapp.searchscreen.Search
-import com.example.newsapp.sports.Sports
-import com.example.newsapp.sundayreview.SundayReview
-import com.example.newsapp.technlogy.Technlogy
 import com.example.newsapp.worldnews.World
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.Single
 
-class MainViewModel(private val repository: Repository):ViewModel() {
+@Single
+@KoinViewModel
+class MainViewModels(private val repository: Repository):ViewModel() {
     private val _allNews= MutableStateFlow<ResultState<News>>(ResultState.Loading)
     val allNews:StateFlow<ResultState<News>> =_allNews.asStateFlow()
 

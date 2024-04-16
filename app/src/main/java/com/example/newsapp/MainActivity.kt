@@ -58,10 +58,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Room
+import com.example.newsapp.di.appModule
 import com.example.newsapp.healthy.Healthy
 import com.example.newsapp.navigation.Entry
 import com.example.newsapp.navigation.Screen
-import com.example.newsapp.newsapi.MainViewModel
+import com.example.newsapp.newsapi.MainViewModels
 import com.example.newsapp.newsapi.News
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.Result
@@ -71,6 +72,10 @@ import com.example.newsapp.ui.theme.NewsAppTheme
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.compose.koinInject
+import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -79,6 +84,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewsAppTheme {
+                startKoin{
+                    androidContext(this@MainActivity)
+                    androidLogger()
+                    modules(appModule)
+                }
                 Entry()
             }
         }
@@ -115,18 +125,8 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    val context = LocalContext.current
-    val db = Room.databaseBuilder(
-        context,
-        DataBase::class.java,
-        "demo.db"
-    ).allowMainThreadQueries().build()
-    val repository = remember {
-        Repository(db)
-    }
-    val viewModel = remember {
-        MainViewModel(repository)
-    }
+    val viewModel:MainViewModels= koinInject()
+
 
     var newsdata by remember {
         mutableStateOf<News?>(null)

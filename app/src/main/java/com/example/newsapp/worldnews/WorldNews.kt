@@ -42,31 +42,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Room
 import com.example.newsapp.navigation.Screen
-import com.example.newsapp.newsapi.MainViewModel
+import com.example.newsapp.newsapi.MainViewModels
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.newsapi.ResultState
 import com.example.newsapp.roomdatabase.DataBase
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WorldNewsScreen(navController: NavController) {
 
-    val context= LocalContext.current
-    val db= Room.databaseBuilder(
-        context,
-        DataBase::class.java,
-        "demo.db"
-    ).allowMainThreadQueries().build()
-    val repository = remember {
-        Repository(db)
-    }
-    val viewModel = remember {
-        MainViewModel(repository)
-    }
+    val viewModel:MainViewModels= koinInject()
+
 
     var worlddata by remember {
         mutableStateOf<World?>(null)

@@ -31,21 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.room.Room
 import coil.compose.AsyncImage
-import com.example.newsapp.R
-import com.example.newsapp.navigation.Screen
-import com.example.newsapp.newsapi.MainViewModel
+import com.example.newsapp.newsapi.MainViewModels
 import com.example.newsapp.newsapi.Repository
 import com.example.newsapp.roomdatabase.DataBase
 import com.example.newsapp.roomdatabase.FavItem
-import kotlin.text.Typography.cent
 
 @Composable
 fun HomeDetailScreen(
@@ -68,7 +63,7 @@ fun HomeDetailScreen(
         Repository(db)
     }
     val viewModel = remember {
-        MainViewModel(repository)
+        MainViewModels(repository)
     }
     var fav by remember {
         mutableStateOf(false)
