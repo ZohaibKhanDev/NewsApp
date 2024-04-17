@@ -29,7 +29,7 @@ If you find my work helpful, you can support me by
 
 ## Screen Shots
 
-| ![Screenshot 1]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/1.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png)) | ![Screenshot 2]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/9.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/2.png)) | ![Screenshot 3]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/59.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/3.png)) |
+| ![Screenshot 1]([)](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png) | ![Screenshot 2](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/2.png) | ![Screenshot 3](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/3.png) |
 | --- | --- | --- |
-| ![Screenshot 4]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/60.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/4.png)) | ![Screenshot 5]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/3.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/5.png))
+| ![Screenshot 4](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/4.png) | ![Screenshot 5](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/5.png) |
 
