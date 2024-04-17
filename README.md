@@ -1,6 +1,4 @@
-# News App Kotlin Multiplatform
-![News App]([https://github.com/KhubaibKhan4/Youtube-Clone-KMP/blob/master/screenshots/poster.png](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png))
-
+# News App
 ## Overview
 YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Bold Claim).
 
@@ -29,7 +27,7 @@ If you find my work helpful, you can support me by
 
 ## Screen Shots
 
-| ![Screenshot 1]([)](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png) | ![Screenshot 2](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/2.png) | ![Screenshot 3](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/3.png) |
+| ![Screenshot 1](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png) | ![Screenshot 2](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/2.png) | ![Screenshot 3](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/3.png) |
 | --- | --- | --- |
 | ![Screenshot 4](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/4.png) | ![Screenshot 5](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/5.png) |
 
