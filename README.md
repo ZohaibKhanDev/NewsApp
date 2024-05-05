@@ -16,6 +16,7 @@ YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatfor
 - **Customized alerts**
 - **Instant updates**
 - **Offline reading**
+- **Interactive content**
 
 
 
