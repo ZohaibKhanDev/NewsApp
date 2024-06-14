@@ -1,7 +1,7 @@
 # News App
 ## Overview
 
-YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Bold Claim)....
+YouTube Clone KMP is a sophisticated project developed using Kotlin Multiplatform (KMP), enabling the creation of versatile applications across Android, iOS, Web, and Desktop platforms with shared code. This comprehensive YouTube clone mirrors the functionalities of the official YouTube app, offering a seamless user experience across various devices. A Better Version of Original App (A Bold Claim).....
 
 ## 🚀 Key Features
 - **World News**
