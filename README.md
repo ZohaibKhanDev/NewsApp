@@ -1,8 +1,6 @@
 # News App
 ## Overview
 
-........
-
 ## 🚀 Key Features
 - **World News**
 - **Fav Option**
