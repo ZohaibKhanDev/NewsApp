@@ -2,7 +2,7 @@
 ## Overview
 
 ## 🚀 Key Features 
-- **World News**
+- **World News** 
 - **Fav Option**
 - **Sharing Options**
 - **Catagerys**
