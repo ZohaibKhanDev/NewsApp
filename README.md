@@ -1,7 +1,7 @@
 # News App
 ## Overview
 
-## 🚀 Key Features
+## 🚀 Key Features 
 - **World News**
 - **Fav Option**
 - **Sharing Options**
