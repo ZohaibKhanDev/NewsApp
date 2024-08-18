@@ -13,7 +13,7 @@
 - **Trending News**
 - **30 Mints Updated News*
 - **Customized alerts**
-- **Instant updates**
+- **Instant updates** 
 - **Offline reading**
 - **Interactive content**
 - **Live streaming**
