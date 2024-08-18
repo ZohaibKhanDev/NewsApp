@@ -1,5 +1,5 @@
 # News App
-## Overview
+## Overview 
 
 ## 🚀 Key Features
 - **World News**
