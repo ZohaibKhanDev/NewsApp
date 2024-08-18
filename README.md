@@ -37,4 +37,3 @@ If you find my work helpful, you can support me by
 | ![Screenshot 1](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/1.png) | ![Screenshot 2](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/2.png) | ![Screenshot 3](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/3.png) |
 | --- | --- | --- |
 | ![Screenshot 4](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/4.png) | ![Screenshot 5](https://github.com/ZohaibKhanDev/NewsApp/blob/master/assesds/5.png) |
-
