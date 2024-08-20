@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.newsapp"
     compileSdk = 34
-
+ 
     defaultConfig {
         applicationId = "com.example.newsapp"
         minSdk = 24
