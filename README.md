@@ -4,7 +4,7 @@
 ## 🚀 Key Features
 - **World News**
 - **Fav Option**
-- **Sharing Options**
+- **Sharing Options** 
 - **Catagerys**
 - **News Details**
 - **Canadian News**
